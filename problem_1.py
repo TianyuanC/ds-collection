@@ -7,7 +7,6 @@ class Node:
 
 
 class LRU_Cache(object):
-
     def __init__(self, capacity):
         self.head = None
         self.tail = None
@@ -17,6 +16,15 @@ class LRU_Cache(object):
         self.capacity = capacity
 
     def get(self, key):
+        """
+        Retrieve LRU cache value based on the key
+
+        Args:
+        key(str): cache key
+
+        Returns:
+        -1 if cache miss, otherwise, returns cached value
+        """
         result = -1
         if key in self.lookup:
             hit = self.lookup.get(key)
@@ -41,6 +49,13 @@ class LRU_Cache(object):
         return result
 
     def set(self, key, value):
+        """
+        Sets LRU cache key and value
+
+        Args:
+        key(str): cache key
+        value(str): cache value
+        """
         node = Node(key, value)
         # a -> b
         # a -> b -> node
@@ -66,11 +81,18 @@ class LRU_Cache(object):
                 self.tail = node
 
     def display(self):
+        """
+        Prints out the internal linked list
+        e.g.,
+        [1: 2] -> [2: 8] -> end
+
+        """
         msg = ""
         curr = self.head
         while curr is not None:
             msg += "[{0}: {1}] -> ".format(curr.key, curr.val)
             curr = curr.nxt
+        msg += "end"
         print(msg)
 
 

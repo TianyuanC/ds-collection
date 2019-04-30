@@ -1,4 +1,4 @@
-# LRU cache
+# LRU Cache
 
 ## Approach
 
