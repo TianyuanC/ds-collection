@@ -12,6 +12,7 @@ class LRU_Cache(object):
         self.head = None
         self.tail = None
         self.count = 0
+        # [key: node] lookup
         self.lookup = {}
         self.capacity = capacity
 
@@ -21,8 +22,13 @@ class LRU_Cache(object):
             hit = self.lookup.get(key)
             result = hit.val
             if self.head is not None and key != self.head.key:
+                # head -> a -> ... -> hit
+                # hit -> head -> a -> ...
                 old_head = self.head
                 old_head.pre = hit
+
+                # ... -> a -> hit -> b
+                # hit -> ... -> a -> b
                 if hit.pre is not None:
                     hit.pre.nxt = hit.nxt
                 if hit.nxt is not None:
@@ -36,6 +42,8 @@ class LRU_Cache(object):
 
     def set(self, key, value):
         node = Node(key, value)
+        # a -> b
+        # a -> b -> node
         if self.count < self.capacity:
             self.lookup[key] = node
             self.count += 1
@@ -47,6 +55,8 @@ class LRU_Cache(object):
             self.tail = node
         else:
             tail = self.tail
+            # a -> b
+            # a -> node
             if tail is not None:
                 self.lookup[key] = node
                 del self.lookup[tail.key]
@@ -64,6 +74,7 @@ class LRU_Cache(object):
         print(msg)
 
 
+# trivial no cache, all retrivals will be miss
 cache = LRU_Cache(0)
 cache.set(1, 1)
 cache.set(2, 2)
@@ -71,6 +82,7 @@ assert cache.get(1) == -1
 assert cache.get(2) == -1
 assert cache.get(3) == -1
 
+# single cache capacity, set and replace
 cache = LRU_Cache(1)
 cache.set(1, 1)
 cache.set(2, 2)
@@ -78,6 +90,7 @@ assert cache.get(1) == -1
 assert cache.get(2) == 2
 assert cache.get(3) == -1
 
+# normal LRU scenario
 cache = LRU_Cache(3)
 cache.set(1, 1)
 cache.set(2, 5)
