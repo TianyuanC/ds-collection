@@ -56,6 +56,11 @@ class LRU_Cache(object):
         key(str): cache key
         value(str): cache value
         """
+        # value replacement
+        if key in self.lookup:
+            self.lookup[key].val = value
+            return
+
         node = Node(key, value)
         # a -> b
         # a -> b -> node
@@ -108,8 +113,9 @@ assert cache.get(3) == -1
 cache = LRU_Cache(1)
 cache.set(1, 1)
 cache.set(2, 2)
+cache.set(2, 4)
 assert cache.get(1) == -1
-assert cache.get(2) == 2
+assert cache.get(2) == 4
 assert cache.get(3) == -1
 
 # normal LRU scenario
