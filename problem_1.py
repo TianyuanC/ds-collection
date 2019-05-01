@@ -105,26 +105,39 @@ class LRU_Cache(object):
 cache = LRU_Cache(0)
 cache.set(1, 1)
 cache.set(2, 2)
-assert cache.get(1) == -1
-assert cache.get(2) == -1
-assert cache.get(3) == -1
+print(cache.get(1))
+# -1
+print(cache.get(1))
+# -1
+print(cache.get(1))
+# -1
+
 
 # single cache capacity, set and replace
+print()
 cache = LRU_Cache(1)
 cache.set(1, 1)
 cache.set(2, 2)
 cache.set(2, 4)
-assert cache.get(1) == -1
-assert cache.get(2) == 4
-assert cache.get(3) == -1
+print(cache.get(1))
+# -1
+print(cache.get(2))
+# 4
+print(cache.get(3))
+# -1
 
 # normal LRU scenario
+print()
 cache = LRU_Cache(3)
 cache.set(1, 1)
 cache.set(2, 5)
 cache.set(7, 9)
-assert cache.get(7) == 9
-assert cache.get(1) == 1
+print(cache.get(7))
+# 9
+print(cache.get(1))
+# 1
 cache.set(3, 10)
-assert cache.get(2) == -1
-assert cache.get(3) == 10
+print(cache.get(2))
+# -1
+print(cache.get(3))
+# 10
