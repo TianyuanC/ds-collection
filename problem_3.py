@@ -37,6 +37,7 @@ def huffman_encoding(data):
     frequency = defaultdict(int)
     for char in data:
         frequency[char] += 1
+
     heap = []
     for key, value in frequency.items():
         node = Node(None, None, key)
@@ -62,9 +63,8 @@ def huffman_decoding(data, tree):
             node = node.left
         else:
             node = node.right
-        if node.value is None:
-            continue
-        else:
+
+        if node.value is not None:
             decoded += node.value
             node = tree
 
